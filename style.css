@@ -17,5 +17,19 @@
 }
 
 .shooter {
+    background-color: green;
+}
+
+.laser {
+    background-color: orange;
+}
+
+.boom {
     background-color: red;
+}
+
+.results {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Arial, sans-serif
 }

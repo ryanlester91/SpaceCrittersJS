@@ -1,4 +1,6 @@
 const grid = document.querySelector('.grid')
+const resultsDisplay = document.querySelector('.results')
+
 let currentShooterIndex = 202
 let width = 15
 let direction = 1
@@ -76,9 +78,39 @@ function moveInvaders() {
     draw()
 
     if (squares[currentShooterIndex].classList.contains('invader', 'shooter')) {
-        console.log('GAME OVER')
+        resultsDisplay.innerHTML = 'GAME OVER'
         clearInterval(invadersId)
+    }
+
+    for (let i = 0; i < alienInvaders.length; i++) {
+        if(alienInvaders[i] > squares.length) {
+            resultsDisplay.innerHTML = 'GAME OVER'
+            clearInterval(invadersId)
+        }
     }
 }
 
 invadersId = setInterval(moveInvaders, 500)
+
+function shoot(e) {
+    let laserId
+    let currentLaserIndex = currentShooterIndex
+    function moveLaser() {
+        squares[currentLaserIndex].classList.remove('laser')
+        currentLaserIndex -= width
+        squares[currentLaserIndex].classList.add('laser')
+
+        if (squares[currentLaserIndex].classList.contains('invader')) {
+            squares[currentLaserIndex].classList.remove('laser')
+            squares[currentLaserIndex].classList.remove('invader')
+            squares[currentLaserIndex].classList.add('boom')
+        }
+
+        }
+        switch(e.key) {
+            case 'ArrowUp':
+                laserId = setInterval(moveLaser, 100)
+    }
+}
+
+document.addEventListener('keydown', shoot)
