@@ -6,11 +6,15 @@ let width = 15
 let direction = 1
 let invadersId
 let goingRight = true
+let aliensRemoved = []
+let results = 0
 
 for (let i = 0; i < 225; i++) {
     const square = document.createElement('div')
     grid.appendChild(square)
-}
+    }
+    
+    
 
 const squares = Array.from(document.querySelectorAll('.grid div'))
 
@@ -22,9 +26,12 @@ const alienInvaders = [
 
 function draw() {
     for (let i = 0; i < alienInvaders.length; i++) {
-        squares[alienInvaders[i]].classList.add('invader')
+        if(!aliensRemoved.includes[i]) {
+            squares[alienInvaders[i]].classList.add('invader')
+        }
     }
 }
+
 draw()
 
 function remove() {
@@ -88,6 +95,11 @@ function moveInvaders() {
             clearInterval(invadersId)
         }
     }
+
+    if (aliensRemoved.length === alienInvaders.length) {
+        resultsDisplay.innerHTML = 'YOU WIN'
+        clearInterval(invadersId)
+    }
 }
 
 invadersId = setInterval(moveInvaders, 500)
@@ -104,6 +116,15 @@ function shoot(e) {
             squares[currentLaserIndex].classList.remove('laser')
             squares[currentLaserIndex].classList.remove('invader')
             squares[currentLaserIndex].classList.add('boom')
+
+            setTimeout(()=> squares[currentLaserIndex].classList.remove('boom'), 300)
+            clearInterval(laserId)
+
+            const alienRemoved = alienInvaders.indexOf(currentLaserIndex)
+            aliensRemoved.push(alienRemoved)
+            results++
+            resultsDisplay.innerHTML = results
+            console.log(aliensRemoved)
         }
 
         }
